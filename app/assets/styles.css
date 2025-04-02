@@ -1,0 +1,191 @@
+/* Base Styles */
+:root {
+    --primary: #1a73e8;
+    --primary-dark: #0d47a1;
+    --secondary: #34a853;
+    --danger: #ea4335;
+    --warning: #fbbc05;
+    --light: #f8f9fa;
+    --dark: #202124;
+    --gray: #5f6368;
+    --light-gray: #dadce0;
+    --border-radius: 12px;
+    --box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+/* App Header */
+.app-header {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 2rem;
+    color: white;
+    box-shadow: var(--box-shadow);
+    text-align: center;
+}
+
+.header-content h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.tagline {
+    background: rgba(255,255,255,0.15);
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+/* Verdict Card */
+.verdict-card {
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    margin: 2rem 0;
+    background: white;
+    box-shadow: var(--box-shadow);
+    text-align: center;
+    border-left: 6px solid;
+}
+
+.verdict-card.real {
+    border-color: var(--secondary);
+}
+
+.verdict-card.fake {
+    border-color: var(--danger);
+}
+
+.verdict-content {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.verdict-title {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gray);
+    margin-bottom: 0.5rem;
+}
+
+.verdict-result {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 1rem 0;
+    line-height: 1.2;
+    color: var(--dark);
+}
+
+.confidence-display {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.confidence-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--dark);
+}
+
+.confidence-label {
+    font-size: 1.1rem;
+    color: var(--gray);
+}
+
+/* Model Analysis */
+.model-analysis {
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    background: white;
+    box-shadow: var(--box-shadow);
+    margin-bottom: 1.5rem;
+}
+
+.model-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.model-header h3 {
+    font-size: 1.3rem;
+    color: var(--dark);
+    margin: 0;
+}
+
+.model-icon {
+    font-size: 2rem;
+}
+
+.analysis-result {
+    margin: 1.5rem 0;
+}
+
+.result-label {
+    font-size: 1rem;
+    color: var(--gray);
+    margin-right: 0.5rem;
+}
+
+.result-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.result-value.real {
+    color: var(--secondary);
+}
+
+.result-value.fake {
+    color: var(--danger);
+}
+
+.confidence-meter {
+    margin-top: 2rem;
+}
+
+.meter-bar {
+    height: 10px;
+    background: var(--light-gray);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.meter-fill {
+    height: 100%;
+    border-radius: 5px;
+    background: var(--secondary); /* Changed to green */
+}
+
+.cnn-analysis .meter-fill {
+    background: var(--secondary); /* Changed to green */
+}
+
+.vit-analysis .meter-fill {
+    background: var(--secondary); /* Changed to green */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header-content h1 {
+        font-size: 2rem;
+    }
+    
+    .verdict-result {
+        font-size: 2rem;
+    }
+    
+    .model-header h3 {
+        font-size: 1.1rem;
+    }
+}
