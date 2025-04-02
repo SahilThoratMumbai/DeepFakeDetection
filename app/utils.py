@@ -3,12 +3,12 @@ import sys
 import os
 import streamlit as st
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))  
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))) 
 import numpy as np
-from DeepFakeDetection.models.cnn_model import CentralDifferenceConv2D
+from models.cnn_model import CentralDifferenceConv2D
 
-from DeepFakeDetection.models.vit_model import PatchExtractor
-from DeepFakeDetection.models.ensemble import explain_decision
+from models.vit_model import PatchExtractor
+from models.ensemble import explain_decision
 
 @st.cache_resource
 def load_models():

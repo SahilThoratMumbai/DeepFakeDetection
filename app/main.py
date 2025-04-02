@@ -38,13 +38,16 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# 7. CSS LOADING
+# 7. CSS LOADING (WITH UTF-8 ENCODING HANDLING)
 def load_css():
     css_path = os.path.join(os.path.dirname(__file__), "assets", "styles.css")
-    if os.path.exists(css_path):
-        with open(css_path, "r") as f:
+    try:
+        with open(css_path, "r", encoding="utf-8") as f:
             return f.read()
-    return ""
+    except Exception as e:
+        st.error(f"⚠️ CSS Loading Error: {str(e)}")
+        return ""
+        
 st.markdown(f"<style>{load_css()}</style>", unsafe_allow_html=True)
 
 # MAIN APPLICATION
@@ -55,9 +58,6 @@ def main():
         <div class="header-content">
             <h1>🕵️ Deepfake Forensic Analyzer</h1>
             <p class="tagline">Advanced AI Detection Suite</p>
-        </div>
-        <div class="header-description">
-            <p>Utilizing cutting-edge ensemble modeling to identify synthetic media</p>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -101,16 +101,23 @@ def main():
             st.caption("Digital Authenticity Assessment")
             
             # Verdict Card
-            verdict_class = "real" if result['final_label'] == "Real" else "fake"
-            verdict_icon = "✅ Authentic" if result['final_label'] == "Real" else "❌ Synthetic"
+            is_real = result['final_label'] == "Real"
+            verdict_class = "real" if is_real else "fake"
+            verdict_icon = "✅" if is_real else "❌"
+            verdict_text = "Real Image" if is_real else "Deepfake Image"
+            confidence_score = result['final_confidence']
+            
             st.markdown(
                 f"""
                 <div class="verdict-card {verdict_class}">
                     <div class="verdict-content">
                         <div class="verdict-title">FINAL VERDICT</div>
-                        <div class="verdict-result">{verdict_icon}</div>
+                        <div class="verdict-result">
+                            <span>{verdict_icon}</span>
+                            <span>{verdict_text}</span>
+                        </div>
                         <div class="confidence-display">
-                            <span class="confidence-value">{result['final_confidence']:.1%}</span>
+                            <span class="confidence-value">{confidence_score:.1%}</span>
                             <span class="confidence-label">confidence score</span>
                         </div>
                     </div>
@@ -177,7 +184,11 @@ def main():
                 result['vit_pred']['confidence'],
                 result['final_confidence']
             ]
-            colors = ['#4285F4', '#EA4335', '#34A853']
+            if is_real:
+                colors = ['#4285F4', '#EA4335', '#1e5631']  # Blue, Green, Dark Green
+            else:
+                colors = ['#EA4335', '#4285F4', '1e5631']  # Red, Orange, Dark Red
+                
             bars = ax.bar(models, confidences, color=colors, width=0.6)
             ax.set_ylim(0, 1.15)
             ax.set_ylabel('Confidence Level')
@@ -192,33 +203,88 @@ def main():
     except Exception as e:
         st.error(f"🔧 Analysis Error: {str(e)}")
 
-    # Sidebar - Now using native Streamlit components
+    # Enhanced Sidebar
     with st.sidebar:
-        st.header("🔍 About This Tool")
+        st.markdown("""
+        <div class="sidebar-section">
+            <div class="sidebar-header">
+                <span class="sidebar-icon">🔍</span>
+                <h2>About This Tool</h2>
+            </div>
+            <p> 
+        Deepfake technology uses AI and deep learning to manipulate digital content.
+        This detection system ensures authenticity by distinguishing real from artificially generated images, reducing associated risks.
+
+.</p>
+        </div>
+        """, unsafe_allow_html=True)
         
         # Technology Stack
-        st.subheader("🔬 Technology Stack")
         st.markdown("""
-        - **Central Difference CNN:** Specialized in artifact detection
-        - **Vision Transformer:** Analyzes global image patterns
-        - **Confidence Ensemble:** Combines models for higher accuracy
-        """)
+        <div class="sidebar-section">
+            <div class="sidebar-header">
+                <span class="sidebar-icon">🔬</span>
+                <h2>Technology Stack</h2>
+            </div>
+            <div class="tech-stack-item">
+                <span class="tech-stack-icon">🧠</span>
+                <div>
+                    <h3>Central Difference CNN</h3>
+                    <p>Specialized in detecting local artifacts and manipulation traces</p>
+                </div>
+            </div>
+            <div class="tech-stack-item">
+                <span class="tech-stack-icon">👁️</span>
+                <div>
+                    <h3>Vision Transformer</h3>
+                    <p>Analyzes global image patterns and contextual relationships</p>
+                </div>
+            </div>
+            <div class="tech-stack-item">
+                <span class="tech-stack-icon">⚖️</span>
+                <div>
+                    <h3>Confidence Ensemble</h3>
+                    <p>Combines model outputs with calibrated confidence scoring</p>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
         
         # Performance Metrics
-        st.subheader("📈 Performance Metrics")
-        col1, col2 = st.columns(2)
-        with col1:
-            st.metric("Accuracy", "94.2%")
-            st.metric("Avg. Runtime", "89ms")
-        with col2:
-            st.metric("AUC Score", "0.96")
-            st.metric("Precision", "98%")
+        st.markdown("""
+        <div class="sidebar-section">
+            <div class="sidebar-header">
+                <span class="sidebar-icon">📈</span>
+                <h2>Performance Metrics</h2>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="metric-card">
+                    <div class="value">98.28%</div>
+                    <div class="label">Accuracy</div>
+                </div>
+                <div class="metric-card">
+                    <div class="value">98.56%</div>
+                    <div class="label">Precision</div>
+                </div>
+                <div class="metric-card">
+                    <div class="value">97.87%</div>
+                    <div class="label">Recall</div>
+                </div>
+                <div class="metric-card">
+                    <div class="value">98.65%</div>
+                    <div class="label">Specificity</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
         
         # Disclaimer
-        st.warning("""
-        **⚠️ Important Notice**  
-        Results should be used as part of a comprehensive analysis process with human review.
-        """)
+        st.markdown("""
+        <div class="notice-box">
+            <h4>Important Notice</h4>
+            <p>Results should be interpreted by trained professionals as part of a comprehensive analysis workflow.</p>
+        </div>
+        """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
