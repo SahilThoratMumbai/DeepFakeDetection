@@ -187,7 +187,7 @@ def main():
             if is_real:
                 colors = ['#4285F4', '#EA4335', '#1e5631']  # Blue, Green, Dark Green
             else:
-                colors = ['#EA4335', '#4285F4', '1e5631']  # Red, Orange, Dark Red
+                colors = ['#EA4335', '#4285F4', '#1e5631']  # Red, Orange, Dark Red
                 
             bars = ax.bar(models, confidences, color=colors, width=0.6)
             ax.set_ylim(0, 1.15)
