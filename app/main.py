@@ -143,6 +143,9 @@ def main():
         <div class="header-content">
             <h1>🕵️ Deepfake Forensic Analyzer</h1>
             <p class="tagline">Advanced AI Detection Suite</p>
+            <div class="header-description">
+            <p>Utilizing cutting-edge ensemble modeling to identify synthetic media</p>
+        </div>
         </div>
     </div>
     """, unsafe_allow_html=True)
