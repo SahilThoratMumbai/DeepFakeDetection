@@ -104,19 +104,19 @@ def render_sidebar():
             </div>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                 <div class="metric-card">
-                    <div class="value">98.28%</div>
+                    <div class="value">94.17%</div>
                     <div class="label">Accuracy</div>
                 </div>
                 <div class="metric-card">
-                    <div class="value">98.56%</div>
+                    <div class="value">95.43%</div>
                     <div class="label">Precision</div>
                 </div>
                 <div class="metric-card">
-                    <div class="value">97.87%</div>
+                    <div class="value">92.40%</div>
                     <div class="label">Recall</div>
                 </div>
                 <div class="metric-card">
-                    <div class="value">98.65%</div>
+                    <div class="value">95.84%</div>
                     <div class="label">Specificity</div>
                 </div>
             </div>
